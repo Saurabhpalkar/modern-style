@@ -1,9 +1,22 @@
 <template>
   <header ref="header" class="header">
     <div class="topline">
-      <span>TRY IT. WEAR IT.</span>
-      <span>YOUR NEIGHBOURHOOD STORE · VIRAR EAST</span>
-      <router-link to="/contact" @click="closeMenus">VISIT US <span aria-hidden="true">↗</span></router-link>
+      <span class="sr-only">Free delivery on orders above ₹999. Diwali offer live now: 50% off. Visit Modern Style in Virar East.</span>
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker-track">
+          <div class="ticker-group">
+            <span>FREE DELIVERY ON ORDERS ABOVE ₹999</span>
+            <span><i>✦</i> DIWALI OFFER LIVE NOW · 50% OFF</span>
+            <span><i>✦</i> CELEBRATE IN STYLE AT MODERN STYLE</span>
+          </div>
+          <div class="ticker-group">
+            <span>FREE DELIVERY ON ORDERS ABOVE ₹999</span>
+            <span><i>✦</i> DIWALI OFFER LIVE NOW · 50% OFF</span>
+            <span><i>✦</i> CELEBRATE IN STYLE AT MODERN STYLE</span>
+          </div>
+        </div>
+      </div>
+      <router-link class="topline-visit" to="/contact" @click="closeMenus">VISIT US <span aria-hidden="true">↗</span></router-link>
     </div>
     <div class="container bar">
       <nav class="links">
@@ -85,9 +98,16 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .header { position: sticky; top: 0; z-index: 50; background: rgba(250, 249, 246, 0.96); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line); }
-.topline { display: flex; justify-content: center; align-items: center; gap: 22px; height: 29px; padding: 0 16px; background: var(--dark); color: #eee8d9; font-size: 8px; letter-spacing: 0.16em; }
-.topline > span:first-child { color: var(--gold); }
-.topline a { color: var(--gold); }
+.topline { display: flex; align-items: center; gap: 20px; height: 29px; padding: 0 16px; overflow: hidden; background: var(--dark); color: #eee8d9; font-size: 8px; letter-spacing: 0.16em; }
+.ticker { min-width: 0; flex: 1; overflow: hidden; }
+.ticker-track { display: flex; width: max-content; animation: ticker-scroll 28s linear infinite; }
+.ticker-group { display: flex; flex: none; align-items: center; gap: 42px; padding-right: 42px; white-space: nowrap; }
+.ticker-group span:first-child { color: var(--gold); }
+.ticker-group i { padding: 0 7px; color: var(--gold); font-style: normal; }
+.topline:hover .ticker-track, .topline:focus-within .ticker-track { animation-play-state: paused; }
+.topline-visit { flex: none; color: var(--gold); }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; clip-path: inset(50%); }
+@keyframes ticker-scroll { to { transform: translateX(-50%); } }
 .bar { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 82px; }
 .links { display: flex; gap: 26px; }
 .links a, .category-menu summary, .cart, .menu-btn { font-size: 9px; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; }
@@ -125,9 +145,12 @@ onBeforeUnmount(() => {
   .right { grid-column: 2; grid-row: 1; gap: 18px; }
 }
 @media (max-width: 420px) {
-  .topline { gap: 10px; font-size: 7px; letter-spacing: 0.1em; }
-  .topline > span:first-child { display: none; }
+  .topline { gap: 10px; padding: 0 10px; font-size: 7px; letter-spacing: 0.1em; }
+  .ticker-group { gap: 24px; padding-right: 24px; }
   .cart, .menu-btn { font-size: 9px; letter-spacing: 0.1em; }
   .right { gap: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; }
 }
 </style>

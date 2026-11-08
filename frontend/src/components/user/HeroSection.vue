@@ -13,12 +13,12 @@
         <img
           :key="slides[current].image"
           class="hero-art"
-          :class="{ 'photo-shop': slides[current].isShop }"
+          :class="{ 'photo-shop': slides[current].isShop, 'photo-festival': slides[current].isFestival }"
           :src="slides[current].image"
           :alt="slides[current].imageAlt"
         />
       </Transition>
-      <div class="photo-caption">
+      <div v-if="!slides[current].isFestival" class="photo-caption">
         <span>{{ slides[current].photoLabel }}</span>
         <span>{{ slides[current].photoLocation }}</span>
       </div>
@@ -27,7 +27,7 @@
 
     <div class="hero-content container">
       <Transition name="copy" mode="out-in">
-        <div :key="current" class="hero-copy">
+        <div v-if="!slides[current].isFestival" :key="current" class="hero-copy">
           <p class="eyebrow">{{ slides[current].eyebrow }}</p>
           <h1 class="heading heading-xl">{{ slides[current].title }}</h1>
           <p class="sub">{{ slides[current].description }}</p>
@@ -65,6 +65,12 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 
 const slides = [
+  {
+    image: '/images/diwali-festive-gift-combos.webp',
+    imageAlt: 'Festive Gift Combos featuring traditional embroidered clothing and a diya',
+    isFestival: true,
+    title: 'Festive Gift Combos',
+  },
   {
     image: '/images/clothing/shirt-rack.jpg',
     imageAlt: 'A colourful row of shirts hanging together on a clothing rack',
